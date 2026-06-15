@@ -1,0 +1,30 @@
+# Data & large artifacts — NEVER commit (public repo!)
+data/
+data/challenge
+artifacts/
+models/
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Embeddings / indexes / weights (belt-and-suspenders)
+*.npy
+*.faiss
+*.index
+*.bin
+*.pkl
+*.pt
+*.gz
+
+# Env / secrets
+.env
+*.key
+
+# OS / editor
+.DS_Store
+.vscode/
