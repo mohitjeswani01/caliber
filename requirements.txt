@@ -1,0 +1,39 @@
+# Caliber dependencies — Python 3.11, CPU-only, no GPU.
+# Versions are pinned to a combination known to install and interoperate
+# cleanly on Linux/macOS CPU wheels. NumPy is held at <2.0 because the pinned
+# faiss-cpu / lightgbm / sentence-transformers wheels were built against the
+# NumPy 1.x ABI. Do NOT bump one of these without re-checking the others.
+
+# --- numerics / data ---
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+
+# --- torch (CPU-only) ---
+# MUST come from the PyTorch CPU index, not PyPI: the PyPI torch==2.2.2 wheel
+# drags in ~2 GB of nvidia CUDA runtime deps we cannot use (CPU-only constraint)
+# and would blow the disk budget. The --extra-index-url below makes `pip install
+# -r requirements.txt` resolve the CPU build (2.2.2+cpu) directly. The README
+# documents the explicit --index-url command Stage 3 should use for an identical
+# wheel. torch 2.2.2 is built against the NumPy 1.x ABI, matching the pin above,
+# and satisfies sentence-transformers' torch>=1.11 requirement.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2
+
+# --- embeddings + retrieval (offline encode, online search) ---
+# sentence-transformers pulls in transformers; it uses the CPU torch pinned
+# above. Keep the model cached locally so rank.py never downloads at runtime
+# (network is off during ranking).
+sentence-transformers==2.7.0
+faiss-cpu==1.8.0
+rank-bm25==0.2.2
+
+# --- learning-to-rank (offline train, online predict) ---
+lightgbm==4.3.0
+
+# --- offline JD/docx parsing + config + metadata ---
+python-docx==1.1.2
+pyyaml==6.0.1
+
+# --- tests ---
+pytest==8.2.0

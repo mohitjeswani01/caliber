@@ -1,0 +1,5 @@
+# Sandbox-only dependencies (hosted small-sample demo, submission_spec §10.5).
+# Installs the core ranking stack plus the demo UI. Pinned to match the root
+# requirements.txt so the sandbox runs the exact same code path as rank.py.
+-r ../requirements.txt
+streamlit==1.36.0
