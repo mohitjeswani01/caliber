@@ -59,6 +59,10 @@ def load_model():
         config.MODELS_DIR.mkdir(parents=True, exist_ok=True)
         model.save(str(local_dir))
 
+    # Cap sequence length (see config): bounds compute and keeps encoding
+    # deterministic regardless of how long an individual profile's text is.
+    model.max_seq_length = config.EMBED_MAX_SEQ_LENGTH
+
     _MODEL = model
     return model
 

@@ -33,6 +33,13 @@ CANDIDATES_PATH = DATA_DIR / "candidates.jsonl"
 EMBED_MODEL_NAME = "BAAI/bge-small-en-v1.5"
 EMBED_MODEL_LOCAL_DIR = MODELS_DIR / "bge-small-en-v1.5"
 EMBED_DIM = 384
+# Truncate candidate text to this many tokens before encoding. Quadratic
+# attention on CPU makes throughput highly sensitive to sequence length; on the
+# dev box 256 encodes ~2.5x faster than the model's 512 default while still
+# covering headline + summary + the current-role description (the signal that
+# surfaces plain-language Tier-5s). Candidate text averages ~440 tokens, so this
+# does truncate older roles; raise toward 512 for max fidelity if compute allows.
+EMBED_MAX_SEQ_LENGTH = 256
 # bge retrieval is asymmetric: the instruction is prepended to the QUERY side
 # (the JD aspect queries) only, never to the candidate "passages". See bge model
 # card. Applied in embeddings.encode_texts(is_query=True).
