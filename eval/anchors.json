@@ -1,0 +1,813 @@
+[
+  {
+    "name": "textbook_senior_ai_engineer",
+    "expected_grade": 4,
+    "note": "right title + 7yr + product co + retrieval/ranking in prod + NLP/IR",
+    "candidate": {
+      "candidate_id": "ANCHOR_001",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Senior AI Engineer",
+        "summary": "NLP/IR engineer building retrieval and ranking systems in production.",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 7.0,
+        "current_title": "Senior AI Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Flipkart",
+          "title": "Senior AI Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 30,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built and deployed embeddings-based semantic search and a learning-to-rank system for product search serving millions of users; measured NDCG and MRR and ran A/B tests to improve relevance."
+        },
+        {
+          "company": "Myntra",
+          "title": "Machine Learning Engineer",
+          "start_date": "2018-01-01",
+          "end_date": "2020-01-01",
+          "duration_months": 36,
+          "is_current": false,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built a recommendation system and information-retrieval pipeline over text; trained and deployed ranking models in production."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Information Retrieval",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Embeddings",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Learning to Rank",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "honeypot_impossible_tenure",
+    "expected_grade": 0,
+    "note": "a single 120-month role but only 3 years total experience",
+    "candidate": {
+      "candidate_id": "ANCHOR_002",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Machine Learning Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 3.0,
+        "current_title": "Machine Learning Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Google",
+          "title": "ML Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 120,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built ranking and retrieval systems in production."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Ranking",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "honeypot_expert_zero_months",
+    "expected_grade": 0,
+    "note": "four expert skills with 0 months of usage",
+    "candidate": {
+      "candidate_id": "ANCHOR_003",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "AI Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 6.0,
+        "current_title": "AI Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Amazon",
+          "title": "AI Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 24,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built retrieval and ranking systems."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "expert",
+          "endorsements": 10,
+          "duration_months": 0
+        },
+        {
+          "name": "Information Retrieval",
+          "proficiency": "expert",
+          "endorsements": 10,
+          "duration_months": 0
+        },
+        {
+          "name": "Ranking",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 0
+        },
+        {
+          "name": "Embeddings",
+          "proficiency": "expert",
+          "endorsements": 10,
+          "duration_months": 0
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "keyword_stuffer_hr_manager",
+    "expected_grade": 0,
+    "note": "non-tech HR title, many AI skills, zero career substance",
+    "candidate": {
+      "candidate_id": "ANCHOR_004",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "HR Manager",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 8.0,
+        "current_title": "HR Manager",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Infosys",
+          "title": "HR Manager",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 48,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Managed recruitment, onboarding, payroll and employee relations."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "Machine Learning",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Deep Learning",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "NLP",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Computer Vision",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "LLMs",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "pure_noise_accountant",
+    "expected_grade": 0,
+    "note": "irrelevant profession, no AI/ML signal",
+    "candidate": {
+      "candidate_id": "ANCHOR_005",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Accountant",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 9.0,
+        "current_title": "Accountant",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Local Firm",
+          "title": "Accountant",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 60,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Prepared financial statements, tax filings and audits."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "Excel",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Taxation",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Accounting",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "consulting_only_services",
+    "expected_max": 1,
+    "note": "real ML title but career entirely at TCS/Infosys/Wipro",
+    "candidate": {
+      "candidate_id": "ANCHOR_006",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Machine Learning Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 7.0,
+        "current_title": "Machine Learning Engineer",
+        "current_company": "TCS",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "TCS",
+          "title": "Machine Learning Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 36,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built ML models and retrieval pipelines for client projects."
+        },
+        {
+          "company": "Infosys",
+          "title": "Data Scientist",
+          "start_date": "2018-01-01",
+          "end_date": "2020-01-01",
+          "duration_months": 36,
+          "is_current": false,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Worked on text ranking and recommendation for clients."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Information Retrieval",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "cv_speech_no_nlp",
+    "expected_max": 1,
+    "note": "strong title but computer-vision/speech only, no NLP/IR",
+    "candidate": {
+      "candidate_id": "ANCHOR_007",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "AI Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 7.0,
+        "current_title": "AI Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Bosch",
+          "title": "AI Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 48,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built computer vision object-detection and image classification models, plus speech recognition (ASR) for in-car systems. Focused on vision and audio, not text."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "Computer Vision",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Image Classification",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Speech Recognition",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "adjacent_gem_data_engineer",
+    "expected_min": 3,
+    "expected_max": 4,
+    "note": "plain title, but descriptions show real retrieval+ranking in production",
+    "candidate": {
+      "candidate_id": "ANCHOR_008",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Data Engineer",
+        "summary": "Data/backend engineer who built retrieval and ranking systems.",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 7.0,
+        "current_title": "Data Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Swiggy",
+          "title": "Data Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 30,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built the semantic search and embeddings retrieval backend for restaurant search; implemented a learning-to-rank model and measured NDCG, deployed to production serving millions of users."
+        },
+        {
+          "company": "Ola",
+          "title": "Software Engineer",
+          "start_date": "2018-01-01",
+          "end_date": "2020-01-01",
+          "duration_months": 30,
+          "is_current": false,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built recommendation and information-retrieval systems over text in production."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "Embeddings",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Elasticsearch",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Ranking",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "too_junior_ml",
+    "expected_min": 1,
+    "expected_max": 2,
+    "note": "real ML work but only 2 years of experience",
+    "candidate": {
+      "candidate_id": "ANCHOR_009",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Machine Learning Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 2.0,
+        "current_title": "Machine Learning Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Startup",
+          "title": "ML Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 24,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built and deployed a retrieval and ranking model in production."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "intermediate",
+          "endorsements": 10,
+          "duration_months": 18
+        },
+        {
+          "name": "Information Retrieval",
+          "proficiency": "intermediate",
+          "endorsements": 10,
+          "duration_months": 18
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "good_fit_minor_gap",
+    "expected_min": 3,
+    "expected_max": 4,
+    "note": "strong substance, 9 yrs (top of band)",
+    "candidate": {
+      "candidate_id": "ANCHOR_010",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Machine Learning Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 9.0,
+        "current_title": "Machine Learning Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Zomato",
+          "title": "Machine Learning Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 40,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built embeddings retrieval and learning-to-rank for search; deployed to production, measured NDCG/MRR, ran A/B tests."
+        },
+        {
+          "company": "Paytm",
+          "title": "Data Scientist",
+          "start_date": "2018-01-01",
+          "end_date": "2020-01-01",
+          "duration_months": 40,
+          "is_current": false,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built recommendation and NLP ranking systems in production."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Embeddings",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Ranking",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "adjacent_no_substance",
+    "expected_min": 1,
+    "expected_max": 2,
+    "note": "backend engineer with only CRUD/web work, no retrieval/ranking",
+    "candidate": {
+      "candidate_id": "ANCHOR_011",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Backend Engineer",
+        "summary": "",
+        "location": "Bangalore",
+        "country": "India",
+        "years_of_experience": 7.0,
+        "current_title": "Backend Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "SomeCo",
+          "title": "Backend Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 48,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built REST APIs, CRUD services and payment integrations with Spring Boot."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "Java",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Spring Boot",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "PostgreSQL",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": true,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  },
+  {
+    "name": "strong_but_non_india_no_relocate",
+    "expected_min": 2,
+    "expected_max": 3,
+    "note": "strong substance but USA-based and not willing to relocate",
+    "candidate": {
+      "candidate_id": "ANCHOR_012",
+      "profile": {
+        "anonymized_name": "Test Person",
+        "headline": "Senior AI Engineer",
+        "summary": "",
+        "location": "San Francisco",
+        "country": "USA",
+        "years_of_experience": 7.0,
+        "current_title": "Senior AI Engineer",
+        "current_company": "Acme",
+        "current_company_size": "501-1000",
+        "current_industry": "Software"
+      },
+      "career_history": [
+        {
+          "company": "Stripe",
+          "title": "Senior AI Engineer",
+          "start_date": "2018-01-01",
+          "end_date": null,
+          "duration_months": 40,
+          "is_current": true,
+          "industry": "Software",
+          "company_size": "501-1000",
+          "description": "Built embeddings retrieval and learning-to-rank search in production; NDCG/MRR."
+        }
+      ],
+      "education": [],
+      "skills": [
+        {
+          "name": "NLP",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Embeddings",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        },
+        {
+          "name": "Ranking",
+          "proficiency": "advanced",
+          "endorsements": 10,
+          "duration_months": 24
+        }
+      ],
+      "redrob_signals": {
+        "github_activity_score": 40,
+        "willing_to_relocate": false,
+        "last_active_date": "2026-06-01",
+        "recruiter_response_rate": 0.6,
+        "open_to_work_flag": true,
+        "interview_completion_rate": 0.9,
+        "notice_period_days": 30
+      }
+    }
+  }
+]

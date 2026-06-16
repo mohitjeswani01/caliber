@@ -1,10 +1,7 @@
-"""Pytest bootstrap: make the ``src/`` package layout importable.
+"""Pytest bootstrap: make the ``src/`` layout importable without an install step.
 
-The package lives under ``src/caliber`` but is not pip-installed, so ``import
-caliber`` would fail with the default ``sys.path``. Adding ``src/`` here lets
-every test (and any consumer running pytest from the repo root) import the
-package without an editable install. Top-level ``eval`` already resolves via the
-repo root that pytest inserts automatically.
+The package lives at ``src/caliber`` and there is no editable install, so tests
+(and ad-hoc scripts) need ``src/`` on ``sys.path`` to ``import caliber``.
 """
 
 import sys
