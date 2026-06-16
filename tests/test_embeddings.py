@@ -1,8 +1,4 @@
-""" for the embedding pipeline (text builder + encoder + precompute wiring).
-
-The model-dependent  use the small bundled sample so they stay fast and the
-cached bge-small model (no network). They skip cleanly if the model can't load.
-"""
+"""Tests for the embedding pipeline: candidate_to_text, the encoder, and precompute row-order wiring."""
 
 import importlib.util
 import json

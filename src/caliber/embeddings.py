@@ -19,6 +19,8 @@ it from local disk, so the online ranker makes zero network calls.
 
 from __future__ import annotations
 
+import os
+
 from typing import Any, Iterable, List, Mapping, Union
 
 import numpy as np
@@ -36,25 +38,55 @@ CandidateLike = Union[str, Mapping[str, Any]]
 
 
 def load_model():
-    """Load the embedding model (CPU), preferring the local cache.
+    """Load the embedding model (CPU) from the LOCAL cache. Fails closed.
 
-    On the first offline run the model is fetched from the HuggingFace hub and
-    saved to ``config.EMBED_MODEL_LOCAL_DIR``; every subsequent load — crucially
-    every *online* load — reads from that local directory and never touches the
-    network.
+    The online ranker (``rank.py``) makes ZERO network calls — a single hit to
+    the HuggingFace hub in the judged sandbox is a Stage-3 disqualification. So
+    this loader never downloads by default: if the model is not already cached at
+    ``config.EMBED_MODEL_LOCAL_DIR`` it raises instead of silently fetching it,
+    and it hard-locks HF/transformers to offline mode *before* importing them.
+
+    The ONE legitimate place a download is allowed is the offline precompute
+    phase, which opts in by setting the env var ``CALIBER_ALLOW_MODEL_DOWNLOAD=1``
+    (e.g. ``CALIBER_ALLOW_MODEL_DOWNLOAD=1 python scripts/precompute.py`` on a
+    fresh box). With that flag set, the offline guards are NOT applied and a
+    missing model is fetched from the hub and cached to the local dir for every
+    subsequent (offline-locked) load. Once cached, neither path touches the
+    network again.
     """
     global _MODEL
     if _MODEL is not None:
         return _MODEL
 
+    local_dir = config.EMBED_MODEL_LOCAL_DIR
+    # Explicit, opt-in escape hatch — ONLY the offline precompute phase sets this.
+    # Everything else (above all the judged online path) is offline-locked.
+    allow_download = os.environ.get("CALIBER_ALLOW_MODEL_DOWNLOAD") == "1"
+
+    if not allow_download:
+        # Defense in depth: lock HF/transformers to offline BEFORE importing them
+        # below, so the online path can never reach the network even by accident —
+        # a stray fetch errors out instead of silently hitting the hub.
+        os.environ["HF_HUB_OFFLINE"] = "1"
+        os.environ["TRANSFORMERS_OFFLINE"] = "1"
+        if not local_dir.exists():
+            raise RuntimeError(
+                f"Embedding model not found at {local_dir}. The online/rank path "
+                "makes ZERO network calls, so the model must already be cached "
+                "locally — this loader will not download it. Run the offline "
+                "precompute once to download and cache the model first:\n"
+                "    CALIBER_ALLOW_MODEL_DOWNLOAD=1 python scripts/precompute.py"
+            )
+
     # Imported lazily so merely importing this module (e.g. in tests that only
     # touch candidate_to_text) does not drag in torch / sentence-transformers.
     from sentence_transformers import SentenceTransformer
 
-    local_dir = config.EMBED_MODEL_LOCAL_DIR
     if local_dir.exists():
         model = SentenceTransformer(str(local_dir), device="cpu")
     else:
+        # Reachable only with CALIBER_ALLOW_MODEL_DOWNLOAD=1 (offline precompute,
+        # first run): fetch from the hub and cache locally for every later load.
         model = SentenceTransformer(config.EMBED_MODEL_NAME, device="cpu")
         config.MODELS_DIR.mkdir(parents=True, exist_ok=True)
         model.save(str(local_dir))
