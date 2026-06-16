@@ -13,3 +13,18 @@ Single source of truth for everything the rest of the package needs to agree on:
 Keeping these out of the logic modules makes the weights easy to sweep during
 tuning and keeps ``rank.py`` reproducible.
 """
+
+from __future__ import annotations
+
+# --- determinism knobs (ARCHITECTURE.md §5) ---------------------------------
+# The single global random seed. Every stochastic step in the project (silver
+# sampling, any train/test split, LTR training) reads this so two runs are
+# bit-identical. The canonical final tie-break is ``candidate_id`` ascending.
+SEED = 42
+TIE_BREAK_KEY = "candidate_id"
+
+# The dataset's reference "now". The pool is a static snapshot, so honeypot
+# date-consistency checks and recency logic must compare against a FIXED date
+# (never the wall clock) to stay deterministic and reproducible. This matches
+# the snapshot the candidates.jsonl pool was generated against.
+REFERENCE_DATE = "2026-06-16"
