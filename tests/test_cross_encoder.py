@@ -125,7 +125,7 @@ def test_rerank_beats_keyword_stuffers(texts, capsys):
     from sentence_transformers import SentenceTransformer
     import numpy as np
 
-    bi = SentenceTransformer(str(config.EMBEDDING_MODEL_DIR), device="cpu")
+    bi = SentenceTransformer(str(config.EMBED_MODEL_LOCAL_DIR), device="cpu")
     embs = bi.encode([JD_TEXT] + cand_texts, normalize_embeddings=True)
     jd_vec, cand_vecs = embs[0], embs[1:]
     cos = (cand_vecs @ jd_vec).tolist()  # normalized -> dot == cosine
