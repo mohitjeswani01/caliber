@@ -25,6 +25,7 @@ ranking must stand on its own if the rerank is ever budget-gated off.
 
 from __future__ import annotations
 
+import os
 import time
 from typing import Iterable, Optional
 
@@ -40,18 +41,38 @@ def load_cross_encoder():
     Loads only from ``config.CROSS_ENCODER_MODEL_DIR``. The model must have been
     fetched offline first (``python scripts/download_cross_encoder.py``); if the
     dir is missing we fail loudly rather than silently reaching for the network.
+
+    Mirrors ``embeddings.load_model``'s fail-closed contract: by default this
+    hard-locks HF/transformers to offline mode *before* importing them, so even a
+    *partial/corrupt* local dir (a half-finished download missing a weight or
+    tokenizer file) errors out instead of silently reaching the HuggingFace hub —
+    a hub fetch in the judged online path is a Stage-3 disqualification. The ONLY
+    opt-in to allow a download is the offline phase setting
+    ``CALIBER_ALLOW_MODEL_DOWNLOAD=1`` (same env var as the embedding model);
+    everything else, above all the judged ``rank.py`` path, is offline-locked.
     """
     global _MODEL
     if _MODEL is not None:
         return _MODEL
 
     model_dir = config.CROSS_ENCODER_MODEL_DIR
-    if not (model_dir.is_dir() and (model_dir / "config.json").exists()):
-        raise FileNotFoundError(
-            f"Cross-encoder not found at {model_dir}. Run "
-            f"`python scripts/download_cross_encoder.py` once offline to cache it. "
-            f"rank.py must never download at runtime."
-        )
+    # Explicit, opt-in escape hatch — ONLY the offline precompute/download phase
+    # sets this. Everything else (above all the judged online path) is locked.
+    allow_download = os.environ.get("CALIBER_ALLOW_MODEL_DOWNLOAD") == "1"
+
+    if not allow_download:
+        # Defense in depth: lock HF/transformers to offline BEFORE importing them
+        # below, so the online path can never reach the network even by accident.
+        # A partial/corrupt local dir then errors out instead of silently hitting
+        # the hub to "repair" itself.
+        os.environ["HF_HUB_OFFLINE"] = "1"
+        os.environ["TRANSFORMERS_OFFLINE"] = "1"
+        if not (model_dir.is_dir() and (model_dir / "config.json").exists()):
+            raise FileNotFoundError(
+                f"Cross-encoder not found at {model_dir}. Run "
+                f"`python scripts/download_cross_encoder.py` once offline to cache it. "
+                f"rank.py must never download at runtime."
+            )
 
     # Imported lazily so merely importing this module (e.g. when testing
     # fusion.py) doesn't drag in torch/sentence-transformers.
