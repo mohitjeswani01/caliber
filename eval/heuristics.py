@@ -1,26 +1,37 @@
-"""Shared candidate-fact extraction + honeypot/stuffer detection (eval-only).
+"""Shared candidate-fact extraction + stuffer detection + honeypot delegation.
 
-This is the SINGLE source of the detection heuristics inside the labeler:
-tolerant parsing accessors over the raw candidate dict, the shared lexicons, and
-the two internal-consistency detectors from STRATEGY.md §5 (honeypot + keyword
-stuffer). ``sampling`` and ``rubric`` both import from here so the two graders
-can't disagree about what a honeypot or a stuffer is.
+This is the SINGLE source of the eval-side detection heuristics: tolerant parsing
+accessors over the raw candidate dict, the shared lexicons, the keyword-stuffer
+detector, and the answer-key entry point to honeypot detection. ``sampling`` and
+``rubric`` both import from here so the two graders can't disagree about what a
+honeypot or a stuffer is.
 
-TODO (Batch 2): the ONLINE ranker will grow ``src/caliber/honeypot.py`` with its
-own ``is_honeypot``. When it lands, reconcile it with ``honeypot_reasons`` here
-(ideally: extract the contradiction rules into one shared, well-tested helper
-that both import) so the eval key and the ranker can never silently drift on
-which profiles are impossible. They MUST agree. Until then this is the only copy
-inside ``eval/`` — keep it that way (do not re-implement detection in rubric.py).
+RECONCILED (Batch 2): honeypot detection is no longer implemented here. The
+contradiction/impossibility rules now live ONCE in ``caliber.honeypot`` (the
+canonical home, also used by the online ranker), and :func:`honeypot_reasons`
+below is a thin pass-through to it. This guarantees the eval answer key and the
+ranker can never drift on which profiles are impossible — they run identical code
+on identical fields. The keyword-STUFFER detector stays here: it is a labeling
+concept (the ranker handles stuffers via skill-gating in ``features.py``, not via
+the honeypot floor), so it has no online counterpart to reconcile against.
 
-By design eval stays self-contained and does NOT import the online modules: the
-answer key must not depend on the ranking path it grades.
+The one online module eval imports is ``caliber.honeypot`` — a dependency-light
+pure-Python module (datetime + config + schema, no models/faiss/torch), so the
+answer key still pulls in none of the ranking-path's heavy machinery.
 """
 
 from __future__ import annotations
 
-import datetime as dt
 import re
+
+# Single source of truth for honeypot detection (see module docstring). Dual
+# import path: ``caliber`` resolves under the test harness (conftest puts src/ on
+# the path); ``src.caliber`` resolves when run from the repo root (the silver
+# label script). Mirrors the pattern already used for ``config`` in sampling.py.
+try:
+    from caliber.honeypot import honeypot_reasons as _canonical_honeypot_reasons
+except ImportError:  # pragma: no cover - exercised by the from-root run path
+    from src.caliber.honeypot import honeypot_reasons as _canonical_honeypot_reasons
 
 # --------------------------------------------------------------------------- #
 # Lexicons / regexes. The substance/aspect terms are aligned with
@@ -136,15 +147,6 @@ def career_text(c):
     return "  ".join(x for x in parts if x)
 
 
-def _parse_date(s):
-    if not s:
-        return None
-    try:
-        return dt.date.fromisoformat(s)
-    except (ValueError, TypeError):
-        return None
-
-
 def title_class(title):
     """strong ML/AI title > adjacent tech title > non-tech > other."""
     if STRONG_TITLE_RE.search(title):
@@ -190,57 +192,13 @@ def avg_completed_tenure(c):
 # Precision-tuned: a false positive that buries a real fit is as costly as a
 # miss. We only trip on genuine INTERNAL contradictions, never on keywords.
 # --------------------------------------------------------------------------- #
-def honeypot_reasons(c, today):
-    """Return the list of internal-consistency violations (empty => clean).
-
-    Calibrated against the pool: the loose "a skill's duration exceeds total
-    experience" signal fires on ~15% of candidates (it is noise by design) and
-    is deliberately NOT used. We keep only hard impossibilities.
-    """
-    reasons = []
-    yoe_months = _yoe(c) * 12.0
-    roles = _roles(c)
-    skills = _skills(c)
-
-    # 1. A single role lasting longer than the candidate's entire career (+6mo
-    #    slack for rounding) is impossible.
-    if yoe_months > 0:
-        for r in roles:
-            if r.get("duration_months", 0) > yoe_months + 6:
-                reasons.append(
-                    f"role tenure {r.get('duration_months')}mo exceeds total experience "
-                    f"{yoe_months:.0f}mo"
-                )
-                break
-
-    # 2. Summed role tenure wildly exceeds the career length (padded/overlapping).
-    total_role_months = sum(r.get("duration_months", 0) for r in roles)
-    if yoe_months > 0 and total_role_months > yoe_months * 1.5 + 24:
-        reasons.append(
-            f"summed role tenure {total_role_months}mo >> career {yoe_months:.0f}mo"
-        )
-
-    # 3. "Expert"/"advanced" in many skills with 0 months of use (STRATEGY §5).
-    expert_zero = sum(
-        1
-        for s in skills
-        if s.get("proficiency") in ("advanced", "expert") and s.get("duration_months", 0) == 0
-    )
-    if expert_zero >= 3:
-        reasons.append(f"{expert_zero} advanced/expert skills with 0 months used")
-
-    # 4. Impossible dates: end before start, or a start in the future.
-    for r in roles:
-        sd = _parse_date(r.get("start_date"))
-        ed = _parse_date(r.get("end_date"))
-        if sd and sd > today:
-            reasons.append("role start date in the future")
-            break
-        if sd and ed and ed < sd:
-            reasons.append("role end date precedes start date")
-            break
-
-    return reasons
+# Re-export the canonical detector under this module's name (same signature:
+# ``honeypot_reasons(record, today) -> list[str]``). It is a direct alias, not a
+# wrapper, so ``eval.heuristics.honeypot_reasons IS caliber.honeypot.honeypot_reasons``
+# — there is one function object, impossible for a second copy to drift from it.
+# ``sampling``/``rubric``/the silver-label tests keep importing it from here
+# unchanged.
+honeypot_reasons = _canonical_honeypot_reasons
 
 
 def stuffer_reasons(c):

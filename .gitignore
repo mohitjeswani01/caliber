@@ -34,3 +34,6 @@ eval/silver_labels.json
 eval/silver_sample_ids.json
 eval/llm_grading_prompts.jsonl
 eval/llm_grades.jsonl
+
+# Claude Code local agent state
+.claude/
