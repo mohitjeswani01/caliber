@@ -74,3 +74,15 @@ CROSS_ENCODER_MAX_LENGTH = 256
 # lives), so rerank a modest shortlist, not all ~800. Uncapped this stage alone
 # blew the 5-min budget; this + the max-length cap keep it well inside it.
 CROSS_ENCODER_SHORTLIST_SIZE = 200
+
+# --- behavioral multiplier envelope (STRATEGY.md §6; issue: behavioral signals)
+# behavioral.py turns the 23 redrob_signals into ONE bounded multiplier applied
+# on top of the substance score. The bounds are clamped here so platform
+# engagement only MODULATES fit, never dominates it: an average candidate sits at
+# ~1.0, a fully-available/engaged one is lifted at most to the cap, and an
+# inactive/unresponsive one is pushed toward the floor WITHOUT being erased
+# (STRATEGY.md §3). The envelope is intentionally asymmetric — the floor is a
+# 0.50x penalty while the cap is only a 1.15x reward — because we want to push
+# unavailable strong-on-paper candidates down harder than we lift engaged ones.
+BEHAVIORAL_MULTIPLIER_FLOOR = 0.50
+BEHAVIORAL_MULTIPLIER_CAP = 1.15
