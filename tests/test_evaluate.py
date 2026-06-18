@@ -125,11 +125,20 @@ def test_resolve_grades_no_overlay_equals_silver(tmp_path):
     assert merged == {"A": 1.0} and n_manual == 0
 
 
-def test_shipped_manual_grades_file_has_the_two_anchors():
-    """The checked-in overlay grades the two genuine fits the realistic pool
-    surfaced: CAND_0002025 -> 4, CAND_0075439 -> 3."""
+def test_shipped_manual_grades_file_has_the_anchor_set():
+    """The checked-in overlay grades the genuine fits the realistic pool surfaced
+    (the original two + the three from the top-20 grading pass). Resolving silver +
+    overlay must total 405 graded."""
     anchors = evaluate.load_manual_grades(evaluate.DEFAULT_MANUAL_GRADES)
-    assert anchors == {"CAND_0002025": 4.0, "CAND_0075439": 3.0}
+    assert anchors == {
+        "CAND_0002025": 4.0,
+        "CAND_0075439": 3.0,
+        "CAND_0089552": 3.0,
+        "CAND_0027691": 4.0,
+        "CAND_0058688": 2.0,
+    }
+    merged, n_manual = evaluate.resolve_grades()
+    assert n_manual == 5 and len(merged) == 405
 
 
 # --------------------------------------------------------------------------- #

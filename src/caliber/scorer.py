@@ -103,21 +103,35 @@ COMPOSITE_FEATURE_NAMES: tuple[str, ...] = (
     "semantic_sim",            # aspect-weighted bi-encoder cosine, clamped [0,1]
 )
 
+# TUNED (2026-06) via the multi-seed silver sweep (eval/sweep.py): selected on the
+# TRAIN composite, validated on a held-out half across 5 deterministic stratified
+# splits (seeds 1/7/42/123/2024). The change vs the original ce=0.25 / sem=0.20
+# prior — CUT the cross-encoder weight and shift that mass into the structured
+# substance backbone — beat that prior 5/5 on BOTH validation composite and
+# NDCG@10 (the gain is NDCG-driven; MAP/P@10 flat). The isolation curve showed the
+# old 0.25 CE was consistently too high.
+#
+# ce_score = 0.10 is a DELIBERATELY LOW, NON-ZERO CE, not a fragile tuned constant:
+# the silver data marginally favours 0.0, but we keep a little CE because its proven
+# keyword-stuffer discrimination matters on the real pool in ways our silver set
+# cannot measure. role_substance stays dominant per §4; the eight small structured
+# features are scaled together (× 0.57/0.32) to fill the remainder so the vector
+# still sums to 1.0. Still PRIORS, not frozen — re-sweep when the silver set grows.
 DEFAULT_WEIGHTS: dict[str, float] = {
-    # Structured substance backbone (~0.55 total; role_substance dominant per §4).
+    # Structured substance backbone (~0.80 total; role_substance dominant per §4).
     "role_substance": 0.23,
-    "skill_corroboration": 0.04,
-    "experience_band": 0.05,
-    "nlp_ir_signal": 0.05,
-    "product_vs_consulting": 0.05,
-    "production_recency": 0.03,
-    "tenure_stability": 0.03,
-    "external_validation": 0.02,
-    "location_fit": 0.05,
-    # Description-level relevance (~0.45 total). CE sharpens the head (where
-    # NDCG@10/@50 lives); semantic_sim is the broader retrieval signal.
-    "ce_score": 0.25,
-    "semantic_sim": 0.20,
+    "skill_corroboration": 0.07125,        # ~0.0713  (0.04 × 0.57/0.32)
+    "experience_band": 0.0890625,          # ~0.0891  (0.05 × 0.57/0.32)
+    "nlp_ir_signal": 0.0890625,            # ~0.0891
+    "product_vs_consulting": 0.0890625,    # ~0.0891
+    "production_recency": 0.0534375,       # ~0.0534  (0.03 × 0.57/0.32)
+    "tenure_stability": 0.0534375,         # ~0.0534
+    "external_validation": 0.035625,       # ~0.0356  (0.02 × 0.57/0.32)
+    "location_fit": 0.0890625,             # ~0.0891
+    # Description-level relevance (~0.20 total). CE sharpens the head (where
+    # NDCG@10/@50 lives) but at a low weight; semantic_sim is the broader signal.
+    "ce_score": 0.10,
+    "semantic_sim": 0.10,
 }
 assert abs(sum(DEFAULT_WEIGHTS.values()) - 1.0) < 1e-9
 assert set(DEFAULT_WEIGHTS) == set(COMPOSITE_FEATURE_NAMES)
