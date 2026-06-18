@@ -1,0 +1,37 @@
+[
+  {
+    "candidate_id": "CAND_0002025",
+    "grade": 4,
+    "source": "manual_anchor",
+    "graded_by": "profile-vs-STRATEGY-§4-rubric",
+    "rationale": "Senior AI Engineer; hybrid BM25+dense retrieval over 30M profiles; LoRA fine-tuning; A/B-tested recommender system; IIIT-Bangalore (tier-1); 5.9 yrs (in the 5-9 senior band); open-to-work; India. Textbook STRATEGY §4 fit. Surfaced by the random realistic-pool draw but never in the stratified silver sample. Graded by reading the profile, NOT by its scorer rank."
+  },
+  {
+    "candidate_id": "CAND_0075439",
+    "grade": 3,
+    "source": "manual_anchor",
+    "graded_by": "profile-vs-STRATEGY-§4-rubric",
+    "rationale": "ML Engineer @ Flipkart; RAG system + owns the eval framework; recommender for 10M users; learning-to-rank. Strong substance, but 4.3 yrs is below the senior 5-9 band, so grade 3 (relevant) rather than 4. Surfaced by the random realistic-pool draw, not in the silver sample. Graded by reading the profile, NOT by its scorer rank."
+  },
+  {
+    "candidate_id": "CAND_0089552",
+    "grade": 3,
+    "graded_by": "manual_profile_review",
+    "source": "realistic_pool_top20_rank9",
+    "rationale": "ML Engineer @ Netflix, 6.0yr, India. Genuine IR substance: semantic search from scratch (sentence-transformers + FAISS), recsys 10M+ users, eval-rigor focus. Tempered to 3: current role is RAG-on-OpenAI-embeddings (integration over core retrieval R&D), open_to_work=false, 120d notice."
+  },
+  {
+    "candidate_id": "CAND_0027691",
+    "grade": 4,
+    "graded_by": "manual_profile_review",
+    "source": "realistic_pool_top20_rank13",
+    "rationale": "NLP Engineer @ Haptik, 6.5yr, India. Bullseye IR/ranking: owned a learning-to-rank system for e-commerce search (hand-tuned -> LTR over 9mo, built relevance-labeling pipeline w/ click-through + human judgments), plus semantic search (sentence-transformers->bge + FAISS + query expansion). In-band, open_to_work, 15d notice. Graded on role-description substance."
+  },
+  {
+    "candidate_id": "CAND_0058688",
+    "grade": 2,
+    "graded_by": "manual_profile_review",
+    "source": "realistic_pool_top20_rank15",
+    "rationale": "AI Engineer @ Vedantu, 6.7yr, Berlin Germany. Two stacked negatives per JD: non-India (STRATEGY section 8 down-weight, no visa sponsorship) and CV-heavy skill tilt (OpenCV/CNN/object-detection/diffusion) vs the JD NLP/IR preference; current role is churn/MLOps. Real recsys experience keeps it at 2, not 0 — relevant but off-profile."
+  }
+]
