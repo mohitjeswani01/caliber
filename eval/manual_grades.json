@@ -1,0 +1,16 @@
+[
+  {
+    "candidate_id": "CAND_0002025",
+    "grade": 4,
+    "source": "manual_anchor",
+    "graded_by": "profile-vs-STRATEGY-§4-rubric",
+    "rationale": "Senior AI Engineer; hybrid BM25+dense retrieval over 30M profiles; LoRA fine-tuning; A/B-tested recommender system; IIIT-Bangalore (tier-1); 5.9 yrs (in the 5-9 senior band); open-to-work; India. Textbook STRATEGY §4 fit. Surfaced by the random realistic-pool draw but never in the stratified silver sample. Graded by reading the profile, NOT by its scorer rank."
+  },
+  {
+    "candidate_id": "CAND_0075439",
+    "grade": 3,
+    "source": "manual_anchor",
+    "graded_by": "profile-vs-STRATEGY-§4-rubric",
+    "rationale": "ML Engineer @ Flipkart; RAG system + owns the eval framework; recommender for 10M users; learning-to-rank. Strong substance, but 4.3 yrs is below the senior 5-9 band, so grade 3 (relevant) rather than 4. Surfaced by the random realistic-pool draw, not in the silver sample. Graded by reading the profile, NOT by its scorer rank."
+  }
+]
