@@ -1,0 +1,70 @@
+# Caliber — submission metadata (mirrors the portal metadata; submission_spec §10).
+# Fields marked TODO are personal/portal values that must be filled by the team
+# before upload — do NOT commit real contact details or repo URLs you don't want
+# public. Everything else describes how the submission is reproduced.
+
+# --- Portal metadata (submission_spec §10.2) -------------------------------
+team_name: "TODO"                       # used in leaderboard / announcements
+primary_contact:
+  name: "TODO"
+  email: "TODO"                         # organizer communication
+  phone: "TODO"
+team_members:                           # name + email per member
+  - name: "TODO"
+    email: "TODO"
+github_repository_url: "TODO"           # https://github.com/USERNAME/REPO (reachable at Stage 3)
+sandbox_demo_link: "TODO"               # hosted env where rank.py can be run (§10.5)
+ai_tools_declared:                      # honest declaration, not penalized
+  - "Claude"
+compute_environment_summary: "WSL2 (Linux 5.15) on x86_64, 16 GB RAM, CPU-only, Python 3.11.15"
+
+# --- Methodology summary (optional, <=200 words; helps Stage-4 review) ------
+methodology_summary: >
+  Two-phase, substance-over-keywords. OFFLINE (scripts/precompute.py): parse the JD
+  into an aspect-based requirement profile; encode all 100K candidates with a local
+  bge-small-en-v1.5 bi-encoder over a description-heavy text representation; build a
+  FAISS IndexFlatIP. ONLINE (rank.py, CPU-only, no network): per-aspect semantic
+  retrieval + BM25 over role descriptions, fused (RRF) to an ~800 shortlist; a local
+  cross-encoder sharpens the head; 9 structured features (role-substance with
+  skill-gating, experience band, NLP/IR vs CV, product-vs-consulting, recency,
+  tenure, external validation, location) combine via tuned hand-weights into a base
+  score, modulated by a bounded behavioral multiplier from the 23 redrob_signals.
+  Internally-inconsistent honeypots are forced to a score floor. The top 100 are
+  selected deterministically (score desc, candidate_id asc), each with a grounded,
+  template-generated reasoning string (no LLM at rank time). LTR is implemented but
+  dormant — the hand-weight combiner is the submitted configuration.
+
+# --- Reproduce (submission_spec §10.3: single command) ----------------------
+reproduce:
+  # One-time OFFLINE precompute (downloads + caches models, builds artifacts/).
+  # Allowed to exceed the 5-min budget; only rank.py is time-bound.
+  precompute_command: "CALIBER_ALLOW_MODEL_DOWNLOAD=1 python scripts/precompute.py --candidates ./data/candidates.jsonl"
+  # The single command that produces the submission CSV from the artifacts.
+  rank_command: "python rank.py --candidates ./data/candidates.jsonl --out ./submission.csv"
+  validate_command: "python tests/validate_submission.py ./submission.csv"
+
+# --- Models (downloaded offline, cached locally; zero network at rank time) --
+models:
+  embedding: "BAAI/bge-small-en-v1.5"            # 384-dim bi-encoder, cached under models/
+  cross_encoder: "cross-encoder/ms-marco-MiniLM-L-6-v2"  # shortlist reranker
+  ltr: "implemented but DORMANT (not used in this submission)"
+
+# --- Key dependency versions (full list in requirements.txt / pyproject) -----
+dependencies:
+  python: "3.11.15"
+  numpy: "1.26.4"
+  faiss-cpu: "1.8.0"
+  sentence-transformers: "2.7.0"
+  lightgbm: "4.3.0"
+
+# --- Artifacts rank.py consumes (built by precompute; gitignored) ------------
+artifacts:
+  - "artifacts/jd_profile.json"          # JD requirement profile
+  - "artifacts/candidate_ids.npy"        # FAISS row -> candidate_id join key
+  - "artifacts/faiss.index"              # IndexFlatIP over the 100K embeddings
+  - "artifacts/candidate_emb.npy"        # embeddings (used offline to build the index)
+
+# --- Timing (fill from the real 100K rank.py run; budget = 300s) -------------
+timing:
+  precompute_seconds: "TODO (record from the precompute run)"
+  rank_seconds: "TODO (record from the 100K rank.py run; must be <= 300)"
