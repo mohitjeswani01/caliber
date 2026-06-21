@@ -1,7 +1,7 @@
-"""Build the structured JD requirement profile (OFFLINE).
+"""The structured JD requirement profile — its structure, intent, and contents.
 
-Turns the free-text job description into ``artifacts/jd_profile.json`` — the
-machine-readable backbone the online scorer reasons against. Captures:
+The machine-readable backbone the online scorer reasons against is
+``artifacts/jd_profile.json``. It captures:
 
 - must-haves (embeddings-based retrieval, vector/hybrid search, eval frameworks,
   strong Python), nice-to-haves (LoRA/PEFT, learning-to-rank, HR-tech, OSS),
@@ -10,6 +10,9 @@ machine-readable backbone the online scorer reasons against. Captures:
 - location preferences (India Tier-1 / relocation-willing) and the 5–9yr band,
 - the canonical query text(s) we embed to score semantic similarity.
 
-This runs offline with no time limit; an LLM may *assist* in drafting the
-profile, but the persisted artifact is static and LLM-free at runtime.
+The profile is hand-curated for the target role and committed directly as
+``artifacts/jd_profile.json`` (a small, static artifact), then loaded at runtime
+via ``scorer.load_jd_profile_artifact``. THIS module documents the profile's
+structure and intent; the committed artifact is the source of truth. The
+artifact is static and LLM-free at runtime.
 """

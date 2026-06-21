@@ -217,10 +217,10 @@ def combine(values: Mapping[str, Optional[float]], weights: Mapping[str, float])
 
 
 def load_jd_profile_artifact(path: Optional[Any] = None) -> dict:
-    """Convenience: load ``artifacts/jd_profile.json`` (the offline → online
-    handoff). Plain JSON read — NOT a dependency on ``jd_profile.load_jd_profile``
-    (which is not implemented yet). ``ranker.py`` may call this until the offline
-    loader lands.
+    """Load the hand-curated, static JD requirement profile
+    (``artifacts/jd_profile.json``). This is the CANONICAL loader used by the
+    scorer and ``rank.py`` — the online path only ever reads the artifact, never
+    rebuilds it. A plain, deterministic JSON read with no network access.
     """
     if path is None:
         path = config.ARTIFACTS_DIR / config.JD_PROFILE_FILE
