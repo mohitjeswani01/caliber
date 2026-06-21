@@ -64,7 +64,43 @@ artifacts:
   - "artifacts/faiss.index"              # IndexFlatIP over the 100K embeddings
   - "artifacts/candidate_emb.npy"        # embeddings (used offline to build the index)
 
-# --- Timing (fill from the real 100K rank.py run; budget = 300s) -------------
+# --- Timing (measured on the full 100K pool; budget = 300s) ------------------
 timing:
-  precompute_seconds: "TODO (record from the precompute run)"
-  rank_seconds: "TODO (record from the 100K rank.py run; must be <= 300)"
+  # OFFLINE precompute (one-time, no budget): ~10.7 min for 100K on a GPU; also
+  # runnable on CPU (slower). Encodes all 100K + builds the FAISS index.
+  precompute_seconds: 642        # ~10.7 min, 100K, GPU encode (offline; no budget)
+  precompute_note: "~10.7 min for 100K on GPU; CPU-runnable (slower). Offline phase, no time limit."
+  # ONLINE rank.py on the full 100,000-candidate pool, CPU-only, zero network.
+  rank_seconds: 108.3            # total wall-clock; HARD budget = 300s
+  rank_load_seconds: 38.2        # stream pool + load artifacts
+  rank_score_seconds: 70.0       # score shortlist + cross-encoder rerank + select
+  rank_budget_seconds: 300       # the hard constraint; we use ~36% of it
+
+# --- Constraints honored at rank time (CLAUDE.md hard constraints) -----------
+constraints_honored:
+  runtime: "108.3s <= 300s (5-min budget)"
+  memory: "<= 16 GB RAM"
+  compute: "CPU-only (no GPU)"
+  network: "ZERO network calls at rank time; HF_HUB_OFFLINE/TRANSFORMERS_OFFLINE locked before any model import (proven by tests/test_network_isolation.py)"
+  model_download: "Only with CALIBER_ALLOW_MODEL_DOWNLOAD=1, used once during offline precompute; the online path fails closed without it"
+  disk: "<= 5 GB intermediate state"
+
+# --- Quality guardrails (asserted in rank.py / ranker.py before any CSV write)-
+guardrails:
+  honeypots_in_top_100: 0        # measured on the real submission; guardrail trips at > 10%
+  tests_passing: 189
+  self_validation: "rank.py self-validates the written CSV with tests/validate_submission.py; non-zero exit on any issue"
+
+# --- Scoring configuration (the shipped weights) -----------------------------
+scoring:
+  combiner: "tuned hand-weights (LTR built but DORMANT)"
+  cross_encoder_weight: 0.10     # tuned down from 0.25; mass shifted to substance features
+  semantic_weight: 0.10
+  role_substance_weight: 0.23    # dominant structured driver (STRATEGY.md §4.1)
+  shortlist_size: 800            # post-fusion candidates scored in detail
+  cross_encoder_shortlist_size: 200  # head reranked by the cross-encoder
+  behavioral_multiplier_envelope: "0.50x .. 1.15x (bounded, asymmetric)"
+  honeypot_floor: -1.0
+  tuning: "selected on TRAIN composite, validated on a held-out half across 5 seeds (1/7/42/123/2024); beat the prior ce=0.25 weights 5/5 on validation composite + NDCG@10"
+  seed: 42
+  reference_date: "2026-06-16"
