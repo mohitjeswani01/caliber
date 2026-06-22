@@ -37,3 +37,11 @@ eval/llm_grades.jsonl
 
 # Claude Code local agent state
 .claude/
+
+# Demo sample artifacts — TRACKED (tiny ~150-row curated set the HF Space needs).
+# These live under sandbox/demo_data/ but are otherwise caught by the artifacts/
+# and *.npy / *.index / *.faiss rules above. Unlike the gitignored full-pool
+# artifacts/ these are committed so the hosted demo is self-contained. Re-include
+# the directory first, then its contents (order matters for git negation).
+!sandbox/demo_data/artifacts/
+!sandbox/demo_data/artifacts/**

@@ -1,0 +1,165 @@
+{
+  "role": "Senior AI Engineer",
+  "experience_band": {
+    "min": 5,
+    "max": 9,
+    "ideal_min": 6,
+    "ideal_max": 8
+  },
+  "aspects": {
+    "embeddings_retrieval": {
+      "weight": 0.3,
+      "query_text": "Built and deployed embeddings-based retrieval systems to real users in production, using sentence-transformers, BGE, E5, OpenAI embeddings or similar models; handled embedding drift, index refresh, and retrieval-quality regressions at scale.",
+      "keywords": [
+        "embeddings",
+        "embedding",
+        "sentence-transformers",
+        "sentence transformer",
+        "bge",
+        "e5",
+        "semantic search",
+        "dense retrieval",
+        "retrieval",
+        "embedding drift",
+        "index refresh",
+        "nearest neighbor",
+        "ann",
+        "knn",
+        "vector embeddings"
+      ]
+    },
+    "vector_db_search": {
+      "weight": 0.18,
+      "query_text": "Operated vector databases and hybrid search infrastructure in production — Pinecone, Weaviate, Qdrant, Milvus, FAISS, OpenSearch or Elasticsearch — combining dense and lexical retrieval to serve candidate and document search.",
+      "keywords": [
+        "vector database",
+        "vector db",
+        "pinecone",
+        "weaviate",
+        "qdrant",
+        "milvus",
+        "faiss",
+        "opensearch",
+        "elasticsearch",
+        "hybrid search",
+        "bm25",
+        "inverted index",
+        "approximate nearest neighbor",
+        "lucene",
+        "solr"
+      ]
+    },
+    "ranking_eval": {
+      "weight": 0.22,
+      "query_text": "Designed rigorous evaluation frameworks for ranking and search systems — including candidate, talent or people search and ranking — measuring NDCG, MRR and MAP, correlating offline benchmarks with online A/B tests and recruiter feedback to keep improving ranking quality without flying blind.",
+      "keywords": [
+        "ndcg",
+        "mrr",
+        "map",
+        "mean average precision",
+        "ranking metrics",
+        "offline evaluation",
+        "a/b testing",
+        "ab test",
+        "online evaluation",
+        "learning to rank",
+        "ranking",
+        "relevance",
+        "precision",
+        "recall",
+        "evaluation framework",
+        "offline online correlation"
+      ]
+    },
+    "nlp_ir_background": {
+      "weight": 0.12,
+      "query_text": "Deep background in natural language processing and information retrieval — understood retrieval and ranking before the LLM era — building search, ranking and recommendation systems over text, rather than primarily computer vision, speech or robotics.",
+      "keywords": [
+        "nlp",
+        "natural language processing",
+        "information retrieval",
+        "ir",
+        "text ranking",
+        "search relevance",
+        "recommendation",
+        "recommender",
+        "recommender system",
+        "query understanding",
+        "tf-idf",
+        "word embeddings",
+        "language model",
+        "matching"
+      ]
+    },
+    "product_company": {
+      "weight": 0.1,
+      "query_text": "Shipped applied machine learning systems at product companies serving real users at meaningful scale, owning ranking, search or recommendation in the product, rather than a career spent at consulting or services firms.",
+      "keywords": [
+        "product company",
+        "saas",
+        "scale",
+        "real users",
+        "production",
+        "shipped",
+        "end-to-end",
+        "platform",
+        "marketplace",
+        "b2b",
+        "consumer",
+        "startup",
+        "millions of users"
+      ]
+    },
+    "production_recency": {
+      "weight": 0.08,
+      "query_text": "Recently shipped production code as a hands-on senior engineer, building and deploying end-to-end ranking or retrieval systems within the last year, rather than moving into non-coding architecture or tech-lead roles.",
+      "keywords": [
+        "currently",
+        "recently",
+        "last year",
+        "past year",
+        "still hands-on",
+        "present",
+        "ongoing",
+        "today",
+        "now",
+        "this year",
+        "in the last",
+        "actively",
+        "day-to-day",
+        "writes code"
+      ]
+    }
+  },
+  "disqualifiers": [
+    "pure_research_no_prod",
+    "consulting_only",
+    "cv_speech_robotics_no_nlp",
+    "title_chaser",
+    "langchain_only_recent"
+  ],
+  "location_prefs": {
+    "preferred_cities": [
+      "Pune",
+      "Noida",
+      "Hyderabad",
+      "Mumbai",
+      "Delhi NCR",
+      "Bangalore"
+    ],
+    "country_priority": "India",
+    "relocation_ok": true
+  },
+  "consulting_firms": [
+    "TCS",
+    "Infosys",
+    "Wipro",
+    "Accenture",
+    "Cognizant",
+    "Capgemini",
+    "Mindtree",
+    "LTIMindtree",
+    "HCL",
+    "Tech Mahindra"
+  ]
+}
