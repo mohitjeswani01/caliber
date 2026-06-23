@@ -1,5 +1,40 @@
-# Sandbox-only dependencies (hosted small-sample demo, submission_spec §10.5).
-# Installs the core ranking stack plus the demo UI. Pinned to match the root
-# requirements.txt so the sandbox runs the exact same code path as rank.py.
--r ../requirements.txt
-streamlit==1.36.0
+# Caliber hosted demo (HuggingFace Spaces) — dependencies.
+#
+# The demo runs the REAL src/caliber pipeline, so it needs the full ranking stack.
+# On the Space, `caliber` is installed straight from the public GitHub repo (the
+# package itself pins no runtime deps — requirements.txt is the single source of
+# truth — so the stack below must be listed explicitly). Pins mirror the repo's
+# root requirements.txt so the Space runs the exact same code path as rank.py.
+
+# --- the Caliber package, from the public repo (real package, not a copy) ---
+caliber @ git+https://github.com/mohitjeswani01/caliber.git
+
+# --- numerics (NumPy held <2.0 for the faiss / sentence-transformers ABI) ---
+numpy==1.26.4
+scikit-learn==1.4.2
+
+# --- torch (CPU-only build from the PyTorch CPU index, never the CUDA PyPI wheel) ---
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2
+
+# --- embeddings + retrieval ---
+sentence-transformers==2.7.0
+faiss-cpu==1.8.0
+rank-bm25==0.2.2
+
+# --- learning-to-rank predict path (imported lazily by the scorer) ---
+lightgbm==4.3.0
+
+# --- config / parsing helpers used across the package ---
+pyyaml==6.0.1
+
+# --- the demo UI ---
+# gradio 4.44.1 calls Starlette's OLD TemplateResponse(name, context) signature.
+# It only caps `fastapi<1.0`, so an unconstrained resolve pulls fastapi/starlette
+# new enough that TemplateResponse swapped to (request, name, ...) — which makes
+# Gradio pass the context dict as the template name and crash every page load with
+# `TypeError: unhashable type: 'dict'`. Pin fastapi/starlette to versions that
+# still accept the old signature so the page renders (local AND on the Space).
+gradio==4.44.1
+fastapi==0.114.2
+starlette==0.38.6
