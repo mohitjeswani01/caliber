@@ -279,6 +279,19 @@ def _css() -> str:
   }}
   .cal .tag {{ color: var(--text-dim); font-size: 19px; margin: 14px 0 0; }}
   .cal .tag em {{ color: var(--text); font-family: Georgia,serif; font-style: italic; }}
+  /* subtle scale callout — muted pill, does not compete with the hero */
+  .cal .scale-note {{
+    display: inline-block; margin: 20px auto 0; max-width: 640px;
+    padding: 9px 18px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text-dim); font-size: 13.5px; line-height: 1.5;
+  }}
+  .cal .scale-note b {{ color: var(--text); font-weight: 600; }}
+  .cal .scale-note .full {{
+    background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }}
   .cal .kicker {{
     display:inline-block; margin-bottom: 18px; padding: 5px 14px; border-radius: 999px;
     border: 1px solid var(--border); background: var(--surface);
@@ -434,7 +447,7 @@ def render_results_body(data: dict) -> str:
     # so the numbers and the cards can never disagree.
     stats = f"""
       <div class="stats">
-        <div class="stat"><span class="num">{data['n_pool']}</span><span class="lbl">candidates ranked</span></div>
+        <div class="stat"><span class="num">{data['n_pool']}</span><span class="lbl">sample ranked · full system does 100K</span></div>
         <div class="stat"><span class="num">{secs}s</span><span class="lbl">real pipeline · CPU-only</span></div>
         <div class="stat amber"><span class="num">{data['n_stuffers']}</span><span class="lbl">keyword-stuffers caught</span></div>
         <div class="stat red"><span class="num">{data['n_honeypots']}</span><span class="lbl">honeypots floored</span></div>
@@ -502,6 +515,9 @@ def _hero_block() -> str:
         <span class="kicker">Redrob · India Runs · Track 1</span>
         <h1>Caliber</h1>
         <p class="tag">Ranking candidates by <em>fit</em>, not keywords.</p>
+        <div class="scale-note">This live demo ranks a <b>150-candidate sample</b> for
+        instant, interactive results. The <span class="full">full Caliber system ranks
+        all 100,000 candidates in ~151s</span> on CPU — see <b>submission.csv</b> and the repo.</div>
       </div>"""
 
 
