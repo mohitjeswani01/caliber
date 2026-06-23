@@ -115,6 +115,44 @@ def _load_artifacts():
     return jd_profile, candidate_ids, faiss_index, candidates_by_id
 
 
+def _ensure_cross_encoder_source() -> str:
+    """Make the cross-encoder resolvable in BOTH environments.
+
+    ``caliber.cross_encoder.load_cross_encoder`` always loads from the local dir
+    ``config.CROSS_ENCODER_MODEL_DIR`` — unlike ``embeddings.load_model`` it has NO
+    hub fallback. That local dir is shipped on a dev box but NOT on an HF Space, so
+    the Space crashes with ``OSError: Can't load the configuration of …/models/
+    ms-marco-MiniLM-L-6-v2``.
+
+    We fix it from here WITHOUT touching the installed package: if the local dir is
+    missing (the Space), we repoint ``config.CROSS_ENCODER_MODEL_DIR`` to the HUB
+    REPO ID (``config.CROSS_ENCODER_MODEL_NAME`` = "cross-encoder/ms-marco-MiniLM-
+    L-6-v2"). With ``CALIBER_ALLOW_MODEL_DOWNLOAD=1`` already set, the loader skips
+    its offline lock and hands that id straight to ``CrossEncoder``, which downloads
+    + caches it from the hub — exactly how the bge embeddings model already loads on
+    the Space. If the local dir EXISTS (a local run, where models/ is present), we
+    leave it untouched so the real local path keeps using the cached model offline.
+
+    ``cross_encoder.load_cross_encoder`` reads ``config.CROSS_ENCODER_MODEL_DIR`` at
+    call time and ``from . import config`` is the same module object we mutate here,
+    so the override is picked up by the first (and only) load. Returns a short source
+    description for the startup log.
+    """
+    local = config.CROSS_ENCODER_MODEL_DIR
+    has_local = (
+        isinstance(local, Path) and local.is_dir() and (local / "config.json").exists()
+    )
+    if has_local:
+        return f"local dir ({local})"
+    # Absent (HF Space): resolve to the hub repo id (a plain string). On the
+    # download-allowed path the loader passes it directly to CrossEncoder.
+    config.CROSS_ENCODER_MODEL_DIR = config.CROSS_ENCODER_MODEL_NAME
+    return f"HuggingFace hub ('{config.CROSS_ENCODER_MODEL_NAME}', downloaded once)"
+
+
+_CE_SOURCE = _ensure_cross_encoder_source()
+print(f"[app] cross-encoder source: {_CE_SOURCE}")
+
 # Load the static artifacts at import (fast). The model download + scoring is
 # deferred to the first compute() call and then cached.
 _JD, _IDS, _INDEX, _CANDS = _load_artifacts()
